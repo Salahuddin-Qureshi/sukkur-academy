@@ -93,6 +93,50 @@ const Registration = () => {
     document.body.removeChild(link);
   };
 
+  const sendToGoogleSheets = async (formData) => {
+    const GOOGLE_SHEETS_URL = 'YOUR_WEB_APP_URL_HERE'; // Replace with your actual Google Apps Script URL
+    
+    const data = {
+      student_name: formData.fullName,
+      father_name: formData.fatherName,
+      email: formData.email,
+      phone: formData.phone,
+      whatsapp: formData.whatsapp || '',
+      date_of_birth: formData.dateOfBirth || '',
+      gender: formData.gender || '',
+      cnic: formData.cnic || '',
+      current_class: formData.currentClass,
+      board: formData.board,
+      school: formData.school || '',
+      previous_marks: formData.previousMarks || '',
+      selected_subjects: formData.selectedSubjects.join(', '),
+      exam_preparation: formData.examPreparation || '',
+      batch_preference: formData.batchPreference || '',
+      address: formData.address,
+      emergency_contact: formData.emergencyContact || '',
+      medical_conditions: formData.medicalConditions || '',
+      previous_tuition: formData.previousTuition || '',
+      goals: formData.goals || '',
+      hear_about_us: formData.hearAboutUs || ''
+    };
+
+    try {
+      const response = await fetch(GOOGLE_SHEETS_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      return result.success;
+    } catch (error) {
+      console.error('Google Sheets Error:', error);
+      return false;
+    }
+  };
+
   const sendEmailNotification = async (formData) => {
     // EmailJS configuration - You'll need to set these up
     const serviceID = 'service_sukkur_academy'; // You'll get this from EmailJS
@@ -152,10 +196,10 @@ const Registration = () => {
     setIsSubmitting(true);
 
     try {
-      // Send email notification to academy
-      const emailSent = await sendEmailNotification(formData);
+      // Send data to Google Sheets
+      const sheetsSuccess = await sendToGoogleSheets(formData);
       
-      if (emailSent) {
+      if (sheetsSuccess) {
         // Also export to CSV for student's records
         exportToCSV(formData);
         
@@ -208,7 +252,7 @@ const Registration = () => {
               </div>
               <h1 style={{ color: 'var(--primary-green)', marginBottom: '1rem' }}>Registration Successful!</h1>
               <p style={{ fontSize: '1.2rem', marginBottom: '2rem' }}>
-                Thank you for registering with The Sukkur Academy. Your registration has been sent directly to the academy and a copy has been downloaded to your computer.
+                Thank you for registering with The Sukkur Academy. Your registration has been automatically added to our database and a copy has been downloaded to your computer.
               </p>
               <div className="card" style={{ padding: '2rem', backgroundColor: 'var(--gray-50)' }}>
                 <h3 style={{ marginBottom: '1rem' }}>What's Next?</h3>
