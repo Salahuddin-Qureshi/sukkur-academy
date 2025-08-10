@@ -94,7 +94,7 @@ const Registration = () => {
   };
 
   const sendToGoogleSheets = async (formData) => {
-    const GOOGLE_SHEETS_URL = 'YOUR_WEB_APP_URL_HERE'; // Replace with your actual Google Apps Script URL
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyQQVULKI1agwQo5RZci_QGzCVl2iWnebUafCACVhlW9QtrJmlaG4J_wNdJWdqyQWlR/exec';
     
     const data = {
       student_name: formData.fullName,
