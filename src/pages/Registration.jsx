@@ -7,78 +7,178 @@ const Registration = () => {
     // Personal Information
     fullName: '',
     fatherName: '',
+    caste: '',
     email: '',
     phone: '',
-    whatsapp: '',
-    dateOfBirth: '',
-    gender: '',
     cnic: '',
+    gender: '',
+    dateOfBirth: '',
+    address: '',
     
     // Academic Information
-    currentClass: '',
     board: '',
+    currentClass: '',
     school: '',
-    previousMarks: '',
-    
-    // Course Selection
-    selectedSubjects: [],
-    examPreparation: '',
-    batchPreference: '',
-    
-    // Additional Information
-    address: '',
-    emergencyContact: '',
-    medicalConditions: '',
-    previousTuition: '',
-    goals: '',
-    hearAboutUs: ''
+    entranceTest: '',
+    examPreparation: ''
   });
 
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const subjects = [
-    'Mathematics',
-    'Chemistry', 
-    'Biology',
-    'Physics',
-    'English'
+  const boards = [
+    'Sindh Board',
+    'Federal Board', 
+    'Agha Khan Board'
+  ];
+
+  const classes = {
+    'Sindh Board': ['9th Class', '10th Class', '11th Class', '12th Class'],
+    'Federal Board': ['9th Class', '10th Class', '11th Class', '12th Class'],
+    'Agha Khan Board': ['9th Class', '10th Class', '11th Class', '12th Class']
+  };
+
+  const schools = [
+    'Government School',
+    'Private School',
+    'College',
+    'Other'
   ];
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     
-    if (type === 'checkbox' && name === 'selectedSubjects') {
-      setFormData(prev => ({
-        ...prev,
-        selectedSubjects: checked 
-          ? [...prev.selectedSubjects, value]
-          : prev.selectedSubjects.filter(subject => subject !== value)
-      }));
-    } else {
-      setFormData(prev => ({
+    setFormData(prev => {
+      const newData = {
         ...prev,
         [name]: value
-      }));
+      };
+      
+      // If entrance test is "no", clear the exam preparation field
+      if (name === 'entranceTest' && value === 'no') {
+        newData.examPreparation = '';
+      }
+      
+      return newData;
+    });
+  };
+
+  const formatPhoneNumber = (value) => {
+    // Remove all non-digits
+    const phoneNumber = value.replace(/\D/g, '');
+    
+    // Limit to 11 digits for Pakistan mobile numbers
+    if (phoneNumber.length > 11) {
+      return phoneNumber.slice(0, 11);
+    }
+    
+    // Format: 03XX-XXXXXXX
+    if (phoneNumber.length >= 4) {
+      return phoneNumber.slice(0, 4) + '-' + phoneNumber.slice(4);
+    }
+    
+    return phoneNumber;
+  };
+
+  const formatCNIC = (value) => {
+    // Remove all non-digits
+    const cnic = value.replace(/\D/g, '');
+    
+    // Limit to 13 digits for CNIC
+    if (cnic.length > 13) {
+      return cnic.slice(0, 13);
+    }
+    
+    // Format: XXXXX-XXXXXXX-X
+    if (cnic.length >= 6) {
+      if (cnic.length >= 13) {
+        return cnic.slice(0, 5) + '-' + cnic.slice(5, 12) + '-' + cnic.slice(12);
+      } else if (cnic.length > 5) {
+        return cnic.slice(0, 5) + '-' + cnic.slice(5);
+      }
+    }
+    
+    return cnic;
+  };
+
+  const handlePhoneChange = (e) => {
+    const formattedPhone = formatPhoneNumber(e.target.value);
+    setFormData(prev => ({
+      ...prev,
+      phone: formattedPhone
+    }));
+  };
+
+  const handleCNICChange = (e) => {
+    const formattedCNIC = formatCNIC(e.target.value);
+    setFormData(prev => ({
+      ...prev,
+      cnic: formattedCNIC
+    }));
+  };
+
+  const sendRegistrationEmail = async (formData) => {
+    // EmailJS Configuration
+    const serviceID = 'service_bd85s5l';
+    const templateID = 'template_moxooui';
+    const publicKey = 'GVk1hqehX3gCZnorJ';
+
+    // Initialize EmailJS with public key
+    emailjs.init(publicKey);
+
+    // Template parameters for registration confirmation email
+    const templateParams = {
+      to_name: formData.fullName,
+      to_email: formData.email,
+      from_name: 'The Sukkur Academy',
+      student_name: formData.fullName,
+      father_name: formData.fatherName,
+      caste: formData.caste || 'Not provided',
+      email: formData.email,
+      phone: formData.phone,
+      cnic: formData.cnic || 'Not provided',
+      gender: formData.gender || 'Not specified',
+      date_of_birth: formData.dateOfBirth || 'Not provided',
+      address: formData.address,
+      board: formData.board,
+      current_class: formData.currentClass,
+      school: formData.school || 'Not provided',
+      entrance_test: formData.entranceTest || 'Not specified',
+      exam_preparation: formData.examPreparation || 'Not specified',
+      registration_date: new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+    };
+
+    try {
+      console.log('Sending registration email with params:', templateParams);
+      
+      const response = await emailjs.send(serviceID, templateID, templateParams);
+      
+      console.log('Registration email sent successfully:', response);
+      return true;
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      throw new Error('Failed to send confirmation email');
     }
   };
 
   const exportToCSV = (data) => {
     const headers = [
-      'Full Name', 'Father Name', 'Email', 'Phone', 'WhatsApp', 'Date of Birth', 'Gender', 'CNIC',
-      'Current Class', 'Board', 'School', 'Previous Marks', 'Selected Subjects', 'Exam Preparation',
-      'Batch Preference', 'Address', 'Emergency Contact', 'Medical Conditions', 'Previous Tuition',
-      'Goals', 'How did you hear about us', 'Registration Date'
+      'Full Name', 'Father Name', 'Caste', 'Email', 'Phone', 'CNIC', 'Gender', 'Date of Birth', 'Address',
+      'Board', 'Current Class', 'School', 'Entrance Test', 'Exam Preparation', 'Registration Date'
     ];
 
     const csvContent = [
       headers.join(','),
       [
-        data.fullName, data.fatherName, data.email, data.phone, data.whatsapp, data.dateOfBirth,
-        data.gender, data.cnic, data.currentClass, data.board, data.school, data.previousMarks,
-        data.selectedSubjects.join('; '), data.examPreparation, data.batchPreference,
-        data.address, data.emergencyContact, data.medicalConditions, data.previousTuition,
-        data.goals, data.hearAboutUs, new Date().toLocaleString()
+        data.fullName, data.fatherName, data.caste, data.email, data.phone, data.cnic, data.gender, 
+        data.dateOfBirth, data.address, data.board, data.currentClass, data.school, data.entranceTest,
+        data.examPreparation, new Date().toLocaleString()
       ].map(field => `"${field}"`).join(',')
     ].join('\n');
 
@@ -93,144 +193,61 @@ const Registration = () => {
     document.body.removeChild(link);
   };
 
-  const sendToGoogleSheets = async (formData) => {
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyQQVULKI1agwQo5RZci_QGzCVl2iWnebUafCACVhlW9QtrJmlaG4J_wNdJWdqyQWlR/exec';
-    
-    const data = {
-      student_name: formData.fullName,
-      father_name: formData.fatherName,
-      email: formData.email,
-      phone: formData.phone,
-      whatsapp: formData.whatsapp || '',
-      date_of_birth: formData.dateOfBirth || '',
-      gender: formData.gender || '',
-      cnic: formData.cnic || '',
-      current_class: formData.currentClass,
-      board: formData.board,
-      school: formData.school || '',
-      previous_marks: formData.previousMarks || '',
-      selected_subjects: formData.selectedSubjects.join(', '),
-      exam_preparation: formData.examPreparation || '',
-      batch_preference: formData.batchPreference || '',
-      address: formData.address,
-      emergency_contact: formData.emergencyContact || '',
-      medical_conditions: formData.medicalConditions || '',
-      previous_tuition: formData.previousTuition || '',
-      goals: formData.goals || '',
-      hear_about_us: formData.hearAboutUs || ''
-    };
-
-    try {
-      const response = await fetch(GOOGLE_SHEETS_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      });
-
-      const result = await response.json();
-      return result.success;
-    } catch (error) {
-      console.error('Google Sheets Error:', error);
-      return false;
-    }
-  };
-
-  const sendEmailNotification = async (formData) => {
-    // EmailJS configuration - You'll need to set these up
-    const serviceID = 'service_sukkur_academy'; // You'll get this from EmailJS
-    const templateID = 'template_registration'; // You'll get this from EmailJS  
-    const publicKey = 'YOUR_PUBLIC_KEY'; // You'll get this from EmailJS
-
-    const templateParams = {
-      to_email: 'info@sukkuracademy.com', // Your email where you want to receive registrations
-      student_name: formData.fullName,
-      father_name: formData.fatherName,
-      email: formData.email,
-      phone: formData.phone,
-      whatsapp: formData.whatsapp || 'Not provided',
-      date_of_birth: formData.dateOfBirth || 'Not provided',
-      gender: formData.gender || 'Not provided',
-      cnic: formData.cnic || 'Not provided',
-      current_class: formData.currentClass,
-      board: formData.board,
-      school: formData.school || 'Not provided',
-      previous_marks: formData.previousMarks || 'Not provided',
-      selected_subjects: formData.selectedSubjects.join(', '),
-      exam_preparation: formData.examPreparation || 'Not selected',
-      batch_preference: formData.batchPreference || 'Not selected',
-      address: formData.address,
-      emergency_contact: formData.emergencyContact || 'Not provided',
-      medical_conditions: formData.medicalConditions || 'None',
-      previous_tuition: formData.previousTuition || 'Not specified',
-      goals: formData.goals || 'Not provided',
-      hear_about_us: formData.hearAboutUs || 'Not specified',
-      registration_date: new Date().toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long', 
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      })
-    };
-
-    try {
-      await emailjs.send(serviceID, templateID, templateParams, publicKey);
-      return true;
-    } catch (error) {
-      console.error('EmailJS Error:', error);
-      return false;
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Validate required fields
-    if (!formData.fullName || !formData.email || !formData.phone || !formData.currentClass || formData.selectedSubjects.length === 0) {
-      alert('Please fill in all required fields and select at least one subject.');
+    if (!formData.fullName || !formData.fatherName || !formData.email || !formData.phone || !formData.board || !formData.currentClass) {
+      alert('Please fill in all required fields.');
       return;
+    }
+
+    // Validate phone number format
+    const phoneRegex = /^03[0-9]{2}-[0-9]{7}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      alert('Please enter a valid Pakistani phone number in format: 03XX-XXXXXXX');
+      return;
+    }
+
+    // Validate CNIC format if provided
+    if (formData.cnic && formData.cnic.length > 0) {
+      const cnicRegex = /^[0-9]{5}-[0-9]{7}-[0-9]$/;
+      if (!cnicRegex.test(formData.cnic)) {
+        alert('Please enter a valid CNIC in format: XXXXX-XXXXXXX-X');
+        return;
+      }
     }
 
     setIsSubmitting(true);
 
     try {
-      // Send data to Google Sheets
-      const sheetsSuccess = await sendToGoogleSheets(formData);
+      // Send confirmation email to student
+      await sendRegistrationEmail(formData);
       
-      if (sheetsSuccess) {
-        // Also export to CSV for student's records
-        exportToCSV(formData);
-        
-        // Store in localStorage as backup
-        const registrations = JSON.parse(localStorage.getItem('registrations') || '[]');
-        registrations.push({
-          ...formData,
-          registrationDate: new Date().toISOString(),
-          id: Date.now()
-        });
-        localStorage.setItem('registrations', JSON.stringify(registrations));
+      // Store in localStorage as backup
+      const registrations = JSON.parse(localStorage.getItem('registrations') || '[]');
+      registrations.push({
+        ...formData,
+        registrationDate: new Date().toISOString(),
+        id: Date.now()
+      });
+      localStorage.setItem('registrations', JSON.stringify(registrations));
 
         // Show success message
         setSubmitted(true);
+      
+      // Scroll to top to show success message
+      window.scrollTo({ top: 0, behavior: 'smooth' });
         
         // Reset form
         setFormData({
-          fullName: '', fatherName: '', email: '', phone: '', whatsapp: '', dateOfBirth: '', gender: '', cnic: '',
-          currentClass: '', board: '', school: '', previousMarks: '', selectedSubjects: [], examPreparation: '', batchPreference: '',
-          address: '', emergencyContact: '', medicalConditions: '', previousTuition: '', goals: '', hearAboutUs: ''
+        fullName: '', fatherName: '', caste: '', email: '', phone: '', cnic: '', gender: '', dateOfBirth: '', address: '',
+        board: '', currentClass: '', school: '', entranceTest: '', examPreparation: ''
         });
-      } else {
-        // Fallback: still save locally and export CSV
-        exportToCSV(formData);
-        alert('Registration saved locally. Please contact the academy directly at 07156354497 to confirm your registration.');
-      }
     } catch (error) {
       console.error('Submission error:', error);
-      // Fallback: export CSV and show message
-      exportToCSV(formData);
-      alert('Registration saved locally. Please contact the academy directly at 07156354497 to confirm your registration.');
+      alert('There was an error processing your registration. Please try again or contact the academy directly at +92 3152550599.');
     }
 
     setIsSubmitting(false);
@@ -252,7 +269,7 @@ const Registration = () => {
               </div>
               <h1 style={{ color: 'var(--primary-green)', marginBottom: '1rem' }}>Registration Successful!</h1>
               <p style={{ fontSize: '1.2rem', marginBottom: '2rem' }}>
-                Thank you for registering with The Sukkur Academy. Your registration has been automatically added to our database and a copy has been downloaded to your computer.
+                Thank you for registering with The Sukkur Academy. Your registration has been saved and a confirmation email has been sent to your email address.
               </p>
               <div className="card" style={{ padding: '2rem', backgroundColor: 'var(--gray-50)' }}>
                 <h3 style={{ marginBottom: '1rem' }}>What's Next?</h3>
@@ -263,8 +280,8 @@ const Registration = () => {
                   <li>Start your academic journey with us!</li>
                 </ul>
                 <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <a href="tel:07156354497" className="btn btn-primary">
-                    Call Us: 07156354497
+                  <a href="tel:+923152550599" className="btn btn-primary">
+                    Call Us: +92 3152550599
                   </a>
                   <button 
                     onClick={() => setSubmitted(false)} 
@@ -300,8 +317,8 @@ const Registration = () => {
 
       {/* Registration Form */}
       <section className="section">
-        <div className="container">
-          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <div className="container registration-container">
+          <div style={{ maxWidth: 'none', margin: '0' }}>
             <form onSubmit={handleSubmit}>
               {/* Personal Information */}
               <div className="card" style={{ marginBottom: '2rem', padding: '2rem' }}>
@@ -310,7 +327,7 @@ const Registration = () => {
                   <h3 style={{ margin: 0 }}>Personal Information</h3>
                 </div>
 
-                <div className="grid grid-2">
+                <div className="grid-3-columns">
                   <div className="form-group">
                     <label className="form-label">Full Name *</label>
                     <input
@@ -338,6 +355,18 @@ const Registration = () => {
                   </div>
 
                   <div className="form-group">
+                    <label className="form-label">Caste</label>
+                    <input
+                      type="text"
+                      name="caste"
+                      value={formData.caste}
+                      onChange={handleChange}
+                      className="form-input"
+                      placeholder="Enter caste"
+                    />
+                  </div>
+
+                  <div className="form-group">
                     <label className="form-label">Email Address *</label>
                     <input
                       type="email"
@@ -356,34 +385,33 @@ const Registration = () => {
                       type="tel"
                       name="phone"
                       value={formData.phone}
-                      onChange={handleChange}
+                      onChange={handlePhoneChange}
                       className="form-input"
                       required
-                      placeholder="Enter phone number"
+                      placeholder="03XX-XXXXXXX"
+                      maxLength="12"
+                      pattern="03[0-9]{2}-[0-9]{7}"
                     />
+                    <small style={{ color: 'var(--text-light)', fontSize: '0.8rem' }}>
+                      Format: 03XX-XXXXXXX (11 digits)
+                    </small>
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label">WhatsApp Number</label>
+                    <label className="form-label">CNIC/B-Form Number</label>
                     <input
-                      type="tel"
-                      name="whatsapp"
-                      value={formData.whatsapp}
-                      onChange={handleChange}
+                      type="text"
+                      name="cnic"
+                      value={formData.cnic}
+                      onChange={handleCNICChange}
                       className="form-input"
-                      placeholder="Enter WhatsApp number"
+                      placeholder="XXXXX-XXXXXXX-X"
+                      maxLength="15"
+                      pattern="[0-9]{5}-[0-9]{7}-[0-9]"
                     />
-                  </div>
-
-                  <div className="form-group">
-                    <label className="form-label">Date of Birth</label>
-                    <input
-                      type="date"
-                      name="dateOfBirth"
-                      value={formData.dateOfBirth}
-                      onChange={handleChange}
-                      className="form-input"
-                    />
+                    <small style={{ color: 'var(--text-light)', fontSize: '0.8rem' }}>
+                      Format: XXXXX-XXXXXXX-X (13 digits)
+                    </small>
                   </div>
 
                   <div className="form-group">
@@ -401,20 +429,19 @@ const Registration = () => {
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label">CNIC/B-Form Number</label>
+                    <label className="form-label">Date of Birth</label>
                     <input
-                      type="text"
-                      name="cnic"
-                      value={formData.cnic}
+                      type="date"
+                      name="dateOfBirth"
+                      value={formData.dateOfBirth}
                       onChange={handleChange}
                       className="form-input"
-                      placeholder="Enter CNIC or B-Form number"
                     />
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Complete Address *</label>
+                  <label className="form-label">Address *</label>
                   <textarea
                     name="address"
                     value={formData.address}
@@ -434,24 +461,7 @@ const Registration = () => {
                   <h3 style={{ margin: 0 }}>Academic Information</h3>
                 </div>
 
-                <div className="grid grid-2">
-                  <div className="form-group">
-                    <label className="form-label">Current Class *</label>
-                    <select
-                      name="currentClass"
-                      value={formData.currentClass}
-                      onChange={handleChange}
-                      className="form-select"
-                      required
-                    >
-                      <option value="">Select Class</option>
-                      <option value="9th">9th Class</option>
-                      <option value="10th">10th Class</option>
-                      <option value="11th">11th Class</option>
-                      <option value="12th">12th Class</option>
-                    </select>
-                  </div>
-
+                <div className="grid-3-columns">
                   <div className="form-group">
                     <label className="form-label">Board *</label>
                     <select
@@ -462,9 +472,26 @@ const Registration = () => {
                       required
                     >
                       <option value="">Select Board</option>
-                      <option value="sindh">Sindh Board</option>
-                      <option value="federal">Federal Board</option>
-                      <option value="agha_khan">Agha Khan Board</option>
+                      {boards.map((board) => (
+                        <option key={board} value={board}>{board}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Class for Admission *</label>
+                    <select
+                      name="currentClass"
+                      value={formData.currentClass}
+                      onChange={handleChange}
+                      className="form-select"
+                      required
+                      disabled={!formData.board}
+                    >
+                      <option value="">Select Class</option>
+                      {formData.board && classes[formData.board]?.map((cls) => (
+                        <option key={cls} value={cls}>{cls}</option>
+                      ))}
                     </select>
                   </div>
 
@@ -481,109 +508,10 @@ const Registration = () => {
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label">Previous Year Marks/Grade</label>
-                    <input
-                      type="text"
-                      name="previousMarks"
-                      value={formData.previousMarks}
-                      onChange={handleChange}
-                      className="form-input"
-                      placeholder="Enter marks or grade"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Course Selection */}
-              <div className="card" style={{ marginBottom: '2rem', padding: '2rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1.5rem' }}>
-                  <Calendar size={24} style={{ color: 'var(--primary-green)', marginRight: '12px' }} />
-                  <h3 style={{ margin: 0 }}>Course Selection</h3>
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Select Subjects (Choose at least one) *</label>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginTop: '0.5rem' }}>
-                    {subjects.map((subject) => (
-                      <label key={subject} style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        padding: '1rem',
-                        border: '2px solid var(--gray-200)',
-                        borderRadius: '8px',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease',
-                        backgroundColor: formData.selectedSubjects.includes(subject) ? 'var(--light-green)' : 'white'
-                      }}>
-                        <input
-                          type="checkbox"
-                          name="selectedSubjects"
-                          value={subject}
-                          checked={formData.selectedSubjects.includes(subject)}
-                          onChange={handleChange}
-                          style={{ marginRight: '8px' }}
-                        />
-                        <span style={{ fontWeight: '500' }}>{subject}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="grid grid-2">
-                  <div className="form-group">
-                    <label className="form-label">Exam Preparation</label>
+                    <label className="form-label">Do you want Entrance Test Preparatory Class?</label>
                     <select
-                      name="examPreparation"
-                      value={formData.examPreparation}
-                      onChange={handleChange}
-                      className="form-select"
-                    >
-                      <option value="">Select Exam</option>
-                      <option value="mdcat">MDCAT</option>
-                      <option value="ecat">ECAT</option>
-                      <option value="both">Both MDCAT & ECAT</option>
-                      <option value="board_only">Board Exams Only</option>
-                    </select>
-                  </div>
-
-                  <div className="form-group">
-                    <label className="form-label">Batch Preference</label>
-                    <select
-                      name="batchPreference"
-                      value={formData.batchPreference}
-                      onChange={handleChange}
-                      className="form-select"
-                    >
-                      <option value="">Select Preference</option>
-                      <option value="mixed">Mixed Batch</option>
-                      <option value="girls_only">Girls Only Batch</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Additional Information */}
-              <div className="card" style={{ marginBottom: '2rem', padding: '2rem' }}>
-                <h3 style={{ marginBottom: '1.5rem' }}>Additional Information</h3>
-
-                <div className="grid grid-2">
-                  <div className="form-group">
-                    <label className="form-label">Emergency Contact</label>
-                    <input
-                      type="tel"
-                      name="emergencyContact"
-                      value={formData.emergencyContact}
-                      onChange={handleChange}
-                      className="form-input"
-                      placeholder="Enter emergency contact number"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label className="form-label">Previous Tuition Experience</label>
-                    <select
-                      name="previousTuition"
-                      value={formData.previousTuition}
+                      name="entranceTest"
+                      value={formData.entranceTest}
                       onChange={handleChange}
                       className="form-select"
                     >
@@ -591,58 +519,33 @@ const Registration = () => {
                       <option value="yes">Yes</option>
                       <option value="no">No</option>
                     </select>
+                </div>
+
+                  <div className="form-group">
+                    <label className="form-label">MDCAT or ECAT?</label>
+                    <select
+                      name="examPreparation"
+                      value={formData.examPreparation}
+                      onChange={handleChange}
+                      className="form-select"
+                      disabled={formData.entranceTest !== 'yes'}
+                    >
+                      <option value="">Select Exam</option>
+                      <option value="mdcat">MDCAT</option>
+                      <option value="ecat">ECAT</option>
+                      <option value="both">Both MDCAT & ECAT</option>
+                    </select>
                   </div>
                 </div>
-
-                <div className="form-group">
-                  <label className="form-label">Medical Conditions (if any)</label>
-                  <textarea
-                    name="medicalConditions"
-                    value={formData.medicalConditions}
-                    onChange={handleChange}
-                    className="form-input"
-                    rows="2"
-                    placeholder="Mention any medical conditions or allergies"
-                  ></textarea>
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Academic Goals</label>
-                  <textarea
-                    name="goals"
-                    value={formData.goals}
-                    onChange={handleChange}
-                    className="form-input"
-                    rows="3"
-                    placeholder="What are your academic and career goals?"
-                  ></textarea>
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">How did you hear about us?</label>
-                  <select
-                    name="hearAboutUs"
-                    value={formData.hearAboutUs}
-                    onChange={handleChange}
-                    className="form-select"
-                  >
-                    <option value="">Select</option>
-                    <option value="friend">Friend/Family</option>
-                    <option value="social_media">Social Media</option>
-                    <option value="poster">Poster/Advertisement</option>
-                    <option value="website">Website</option>
-                    <option value="school">School</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
               </div>
+
 
               {/* Submit Button */}
               <div className="text-center">
                 <div className="card" style={{ padding: '2rem', backgroundColor: 'var(--gray-50)' }}>
                   <h4 style={{ marginBottom: '1rem' }}>Review and Submit</h4>
                   <p style={{ marginBottom: '2rem', color: 'var(--text-light)' }}>
-                    Please review all information before submitting. Your registration data will be downloaded as a CSV file.
+                    Please review all information before submitting. A confirmation email will be sent to your email address.
                   </p>
                   <button 
                     type="submit" 

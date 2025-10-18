@@ -1,5 +1,6 @@
 import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from 'lucide-react';
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,9 @@ const Contact = () => {
     message: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -17,32 +21,90 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you can add logic to handle form submission
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! We will get back to you soon.');
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: ''
-    });
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      // EmailJS Configuration
+      const serviceID = 'service_bd85s5l';
+      const templateID = 'template_g1m2xyk';
+      const publicKey = 'GVk1hqehX3gCZnorJ';
+
+      // Initialize EmailJS with public key
+      emailjs.init(publicKey);
+
+      // Template parameters for auto-reply email to user
+      const templateParams = {
+        to_name: formData.name, // User's name
+        to_email: formData.email, // User's email
+        from_name: 'The Sukkur Academy',
+        user_name: formData.name,
+        user_email: formData.email,
+        user_phone: formData.phone,
+        user_subject: formData.subject,
+        user_message: formData.message,
+        reply_date: new Date().toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })
+      };
+
+      console.log('Sending email with params:', templateParams);
+
+      // Send auto-reply email to user
+      const response = await emailjs.send(serviceID, templateID, templateParams);
+      
+      console.log('Email sent successfully:', response);
+
+      setSubmitStatus('success');
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+      });
+
+      // Clear success message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus(null);
+      }, 5000);
+
+    } catch (error) {
+      console.error('EmailJS Error Details:', error);
+      console.error('Error text:', error.text);
+      console.error('Error status:', error.status);
+      setSubmitStatus('error');
+      
+      // Show alert with specific error for debugging
+      alert(`Error: ${error.text || error.message || 'Unknown error'}\nStatus: ${error.status || 'N/A'}`);
+      
+      // Clear error message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus(null);
+      }, 5000);
+    }
+
+    setIsSubmitting(false);
   };
 
   const contactInfo = [
     {
       icon: <Phone size={24} />,
-      title: "Phone Numbers",
-      details: ["07156354497", "03000555547", "03152550599", "03130624555"],
-      action: "tel:07156354497"
+      title: "Phone Number",
+      details: ["+92 3152550599"],
+      action: "tel:+923152550599"
     },
     {
       icon: <Mail size={24} />,
       title: "Email Address", 
-      details: ["info@sukkuracademy.com", "contact@sukkuracademy.com"],
-      action: "mailto:info@sukkuracademy.com"
+      details: ["thesukkuracademy@gmail.com"],
+      action: "mailto:thesukkuracademy@gmail.com"
     },
     {
       icon: <MapPin size={24} />,
@@ -156,6 +218,40 @@ const Contact = () => {
               </p>
 
               <form onSubmit={handleSubmit} className="card" style={{ padding: '2rem' }}>
+                {/* Success Message */}
+                {submitStatus === 'success' && (
+                  <div style={{
+                    backgroundColor: '#d1fae5',
+                    color: '#065f46',
+                    padding: '1rem',
+                    borderRadius: '8px',
+                    marginBottom: '1.5rem',
+                    border: '1px solid #059669'
+                  }}>
+                    <strong>✓ Message sent successfully!</strong>
+                    <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>
+                      Thank you for contacting us. We've sent a confirmation email to {formData.email}. We'll get back to you soon!
+                    </p>
+                  </div>
+                )}
+
+                {/* Error Message */}
+                {submitStatus === 'error' && (
+                  <div style={{
+                    backgroundColor: '#fee2e2',
+                    color: '#991b1b',
+                    padding: '1rem',
+                    borderRadius: '8px',
+                    marginBottom: '1.5rem',
+                    border: '1px solid #dc2626'
+                  }}>
+                    <strong>✗ Error sending message</strong>
+                    <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>
+                      Please try again or contact us directly at +92 3152550599
+                    </p>
+                  </div>
+                )}
+
                 <div className="form-group">
                   <label className="form-label">Full Name *</label>
                   <input
@@ -166,6 +262,7 @@ const Contact = () => {
                     className="form-input"
                     required
                     placeholder="Enter your full name"
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -179,6 +276,7 @@ const Contact = () => {
                     className="form-input"
                     required
                     placeholder="Enter your email"
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -192,6 +290,7 @@ const Contact = () => {
                     className="form-input"
                     required
                     placeholder="Enter your phone number"
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -203,13 +302,14 @@ const Contact = () => {
                     onChange={handleChange}
                     className="form-select"
                     required
+                    disabled={isSubmitting}
                   >
                     <option value="">Select a subject</option>
-                    <option value="admission">Admission Inquiry</option>
-                    <option value="courses">Course Information</option>
-                    <option value="fees">Fee Structure</option>
-                    <option value="schedule">Class Schedule</option>
-                    <option value="other">Other</option>
+                    <option value="Admission Inquiry">Admission Inquiry</option>
+                    <option value="Course Information">Course Information</option>
+                    <option value="Fee Structure">Fee Structure</option>
+                    <option value="Class Schedule">Class Schedule</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
 
@@ -224,12 +324,36 @@ const Contact = () => {
                     required
                     placeholder="Enter your message"
                     style={{ resize: 'vertical', minHeight: '120px' }}
+                    disabled={isSubmitting}
                   ></textarea>
                 </div>
 
-                <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
-                  <Send size={20} style={{ marginRight: '8px' }} />
-                  Send Message
+                <button 
+                  type="submit" 
+                  className="btn btn-primary" 
+                  style={{ width: '100%' }}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div style={{ 
+                        display: 'inline-block', 
+                        width: '20px', 
+                        height: '20px', 
+                        border: '2px solid #ffffff', 
+                        borderTop: '2px solid transparent', 
+                        borderRadius: '50%', 
+                        animation: 'spin 1s linear infinite', 
+                        marginRight: '8px' 
+                      }}></div>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send size={20} style={{ marginRight: '8px' }} />
+                      Send Message
+                    </>
+                  )}
                 </button>
               </form>
             </div>
@@ -249,7 +373,7 @@ const Contact = () => {
                     <Phone size={20} style={{ marginRight: '12px' }} />
                     <div>
                       <p style={{ margin: 0, fontWeight: '600' }}>Call us directly:</p>
-                      <p style={{ margin: 0, color: '#d1fae5', fontSize: '0.9rem' }}>07156354497</p>
+                      <p style={{ margin: 0, color: '#d1fae5', fontSize: '0.9rem' }}>+92 3152550599</p>
                     </div>
                   </div>
 
@@ -257,7 +381,7 @@ const Contact = () => {
                     <MessageCircle size={20} style={{ marginRight: '12px' }} />
                     <div>
                       <p style={{ margin: 0, fontWeight: '600' }}>WhatsApp:</p>
-                      <p style={{ margin: 0, color: '#d1fae5', fontSize: '0.9rem' }}>03000555547</p>
+                      <p style={{ margin: 0, color: '#d1fae5', fontSize: '0.9rem' }}>+92 3152550599</p>
                     </div>
                   </div>
 
@@ -265,7 +389,7 @@ const Contact = () => {
                     <Mail size={20} style={{ marginRight: '12px' }} />
                     <div>
                       <p style={{ margin: 0, fontWeight: '600' }}>Email:</p>
-                      <p style={{ margin: 0, color: '#d1fae5', fontSize: '0.9rem' }}>info@sukkuracademy.com</p>
+                      <p style={{ margin: 0, color: '#d1fae5', fontSize: '0.9rem' }}>thesukkuracademy@gmail.com</p>
                     </div>
                   </div>
                 </div>
@@ -340,8 +464,8 @@ const Contact = () => {
             <p style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>
               Still have questions? Don't hesitate to contact us!
             </p>
-            <a href="tel:07156354497" className="btn btn-primary">
-              Call Now: 07156354497
+            <a href="tel:+923152550599" className="btn btn-primary">
+              Call Now: +92 3152550599
             </a>
           </div>
         </div>

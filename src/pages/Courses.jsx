@@ -5,48 +5,45 @@ const Courses = () => {
   const courses = [
     {
       title: "Mathematics",
-      instructor: "Prof Badar Qureshi",
       classes: "9th, 10th, 11th, 12th",
       description: "Comprehensive mathematics program covering algebra, calculus, geometry, and advanced topics for MDCAT/ECAT preparation.",
       features: ["Problem-solving techniques", "Conceptual clarity", "Practice worksheets", "Weekly assessments"],
-      fee: "20,000",
       icon: "📐"
     },
     {
       title: "Chemistry", 
-      instructor: "Prof A Sattar Soomro",
       classes: "9th, 10th, 11th, 12th",
       description: "Complete chemistry curriculum including organic, inorganic, and physical chemistry with practical applications.",
       features: ["Laboratory concepts", "Chemical equations", "Periodic table mastery", "Reaction mechanisms"],
-      fee: "20,000",
       icon: "⚗️"
     },
     {
       title: "English",
-      instructor: "Prof Zulfiqar Ali Panhwar", 
       classes: "9th, 10th, 11th, 12th",
       description: "English language and literature program focusing on grammar, composition, and comprehension skills.",
       features: ["Grammar fundamentals", "Essay writing", "Literature analysis", "Vocabulary building"],
-      fee: "20,000",
       icon: "📚"
     },
     {
       title: "Biology",
-      instructor: "Prof Farhan Soomro & Prof Ranjeet Kumar",
       classes: "9th, 10th, 11th, 12th", 
       description: "Comprehensive biology program covering botany, zoology, and human biology for medical entrance preparation.",
       features: ["MDCAT preparation", "Diagram practice", "Conceptual understanding", "System-wise study"],
-      fee: "20,000",
       icon: "🧬"
     },
     {
       title: "Physics",
-      instructor: "Prof Atta M Chachar",
       classes: "9th, 10th, 11th, 12th",
       description: "Complete physics curriculum with emphasis on mechanics, thermodynamics, electromagnetism, and modern physics.",
       features: ["Problem solving", "Formula applications", "Numerical practice", "Concept building"],
-      fee: "20,000", 
       icon: "⚛️"
+    },
+    {
+      title: "Information Technology",
+      classes: "9th, 10th, 11th, 12th",
+      description: "Modern IT education covering computer fundamentals, web development basics, and introduction to artificial intelligence.",
+      features: ["Computer Knowledge", "Web Development", "AI Basics", "Digital Literacy"],
+      icon: "💻"
     }
   ];
 
@@ -54,21 +51,19 @@ const Courses = () => {
     {
       title: "MDCAT Preparation",
       description: "Medical and Dental College Admission Test preparation with comprehensive coverage of Biology, Chemistry, Physics, and English.",
-      features: ["Past papers practice", "Mock tests", "Time management", "Subject-wise preparation"],
-      duration: "6-12 months"
+      features: ["Past papers practice", "Mock tests", "Time management", "Subject-wise preparation"]
     },
     {
       title: "ECAT Preparation", 
       description: "Engineering College Admission Test preparation focusing on Mathematics, Physics, Chemistry, and English.",
-      features: ["Engineering mathematics", "Applied physics", "Problem-solving", "Exam strategies"],
-      duration: "6-12 months"
+      features: ["Engineering mathematics", "Applied physics", "Problem-solving", "Exam strategies"]
     }
   ];
 
   const boards = [
     { name: "Sindh Board", icon: "🏛️" },
     { name: "Agha Khan Board", icon: "🎓" },
-    { name: "Federal Board", icon: "🏢" }
+    { name: "Federal Board", icon: "🏢" } 
   ];
 
   return (
@@ -89,66 +84,139 @@ const Courses = () => {
       </section>
 
       {/* Course Overview */}
-      <section className="section">
+      <section className="section" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
         <div className="container">
-          <div className="text-center" style={{ marginBottom: '3rem' }}>
-            <h2>Subject-wise Programs</h2>
-            <p style={{ fontSize: '1.1rem' }}>Expert instruction in all major subjects for classes 9th to 12th</p>
+          <div className="text-center" style={{ marginBottom: '4rem' }}>
+            <h2 style={{ 
+              fontSize: '2.5rem', 
+              fontWeight: '700', 
+              color: '#1e293b',
+              marginBottom: '1rem'
+            }}>
+              Subject-wise Programs
+            </h2>
+            <p style={{ 
+              fontSize: '1.2rem', 
+              color: '#64748b',
+              maxWidth: '700px', 
+              margin: '0 auto',
+              lineHeight: '1.6'
+            }}>
+              Expert instruction in all major subjects for classes 9th to 12th
+            </p>
           </div>
 
-          <div className="grid grid-3">
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+            gap: '1.5rem'
+          }}>
             {courses.map((course, index) => (
-              <div key={index} className="card" style={{ height: '100%' }}>
-                <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-                  <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>{course.icon}</div>
-                  <h3 style={{ color: 'var(--primary-green)', marginBottom: '0.5rem' }}>{course.title}</h3>
-                  <p style={{ color: 'var(--text-light)', fontSize: '0.9rem' }}>{course.instructor}</p>
-                  <div style={{ 
-                    backgroundColor: 'var(--gray-100)', 
-                    padding: '0.5rem 1rem', 
-                    borderRadius: '20px',
-                    display: 'inline-block',
-                    fontSize: '0.9rem',
-                    marginTop: '0.5rem'
+              <div key={index} style={{
+                background: 'white',
+                borderRadius: '16px',
+                padding: '1.5rem',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+                border: '1px solid #e2e8f0',
+                transition: 'all 0.3s ease',
+                position: 'relative',
+                overflow: 'hidden',
+                height: 'auto'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-4px)';
+                e.currentTarget.style.boxShadow = '0 8px 30px rgba(0, 0, 0, 0.12)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
+              }}>
+                {/* Top accent bar */}
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: '3px',
+                  background: 'linear-gradient(90deg, var(--primary-green), #059669)'
+                }}></div>
+
+                {/* Header section */}
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  marginBottom: '1rem' 
+                }}>
+                  <div style={{
+                    width: '50px',
+                    height: '50px',
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, var(--primary-green), #059669)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginRight: '1rem',
+                    fontSize: '1.5rem',
+                    color: 'white',
+                    boxShadow: '0 4px 12px rgba(34, 197, 94, 0.3)',
+                    flexShrink: 0
                   }}>
-                    Classes: {course.classes}
+                    {course.icon}
+                  </div>
+                  
+                  <div style={{ flex: 1 }}>
+                    <h3 style={{ 
+                      color: '#1e293b', 
+                      marginBottom: '0',
+                      fontSize: '1.2rem',
+                      fontWeight: '600'
+                    }}>
+                      {course.title}
+                    </h3>
                   </div>
                 </div>
 
-                <p style={{ marginBottom: '1.5rem' }}>{course.description}</p>
+                {/* Description */}
+                <p style={{ 
+                  marginBottom: '1rem', 
+                  color: '#64748b',
+                  lineHeight: '1.5',
+                  fontSize: '0.9rem'
+                }}>
+                  {course.description}
+                </p>
 
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <h5 style={{ marginBottom: '1rem' }}>Course Features:</h5>
-                  <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                {/* Features */}
+                <div style={{ marginBottom: '1rem' }}>
+                  <h5 style={{ 
+                    marginBottom: '0.8rem',
+                    color: '#1e293b',
+                    fontSize: '0.95rem',
+                    fontWeight: '600'
+                  }}>
+                    Key Features:
+                  </h5>
+                  <div style={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(2, 1fr)', 
+                    gap: '0.4rem' 
+                  }}>
                     {course.features.map((feature, idx) => (
-                      <li key={idx} style={{ 
+                      <div key={idx} style={{ 
                         display: 'flex', 
                         alignItems: 'center', 
-                        marginBottom: '0.5rem',
-                        fontSize: '0.9rem'
+                        fontSize: '0.8rem',
+                        color: '#475569'
                       }}>
-                        <CheckCircle size={16} style={{ color: 'var(--primary-green)', marginRight: '8px' }} />
-                        {feature}
-                      </li>
+                        <CheckCircle size={14} style={{ 
+                          color: 'var(--primary-green)', 
+                          marginRight: '6px',
+                          flexShrink: 0
+                        }} />
+                        <span style={{ lineHeight: '1.3' }}>{feature}</span>
+                      </div>
                     ))}
-                  </ul>
-                </div>
-
-                <div style={{ 
-                  marginTop: 'auto',
-                  padding: '1rem 0',
-                  borderTop: '1px solid var(--gray-200)',
-                  textAlign: 'center'
-                }}>
-                  <div style={{ 
-                    fontSize: '1.5rem', 
-                    fontWeight: 'bold', 
-                    color: 'var(--primary-green)',
-                    marginBottom: '0.5rem'
-                  }}>
-                    Rs. {course.fee}
                   </div>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-light)', margin: 0 }}>per course</p>
                 </div>
               </div>
             ))}
@@ -157,38 +225,128 @@ const Courses = () => {
       </section>
 
       {/* Exam Preparation */}
-      <section className="section section-bg">
+      <section className="section">
         <div className="container">
-          <div className="text-center" style={{ marginBottom: '3rem' }}>
-            <h2>Entrance Exam Preparation</h2>
-            <p style={{ fontSize: '1.1rem' }}>Specialized programs for medical and engineering entrance tests</p>
+          <div className="text-center" style={{ marginBottom: '4rem' }}>
+            <h2 style={{ 
+              fontSize: '2.5rem', 
+              fontWeight: '700', 
+              color: '#1e293b',
+              marginBottom: '1rem'
+            }}>
+              Entrance Exam Preparation
+            </h2>
+            <p style={{ 
+              fontSize: '1.2rem', 
+              color: '#64748b',
+              maxWidth: '700px', 
+              margin: '0 auto',
+              lineHeight: '1.6'
+            }}>
+              Specialized programs for medical and engineering entrance tests
+            </p>
           </div>
 
-          <div className="grid grid-2">
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', 
+            gap: '2rem'
+          }}>
             {examPrep.map((exam, index) => (
-              <div key={index} className="card" style={{ padding: '2.5rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1.5rem' }}>
-                  <Target size={40} style={{ color: 'var(--primary-green)', marginRight: '1rem' }} />
+              <div key={index} style={{
+                background: 'white',
+                borderRadius: '24px',
+                padding: '2.5rem',
+                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+                border: '1px solid #e2e8f0',
+                transition: 'all 0.3s ease',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
+              }}>
+                {/* Top accent bar */}
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: '4px',
+                  background: 'linear-gradient(90deg, var(--primary-green), #059669)'
+                }}></div>
+
+                {/* Header */}
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  marginBottom: '2rem' 
+                }}>
+                  <div style={{
+                    width: '70px',
+                    height: '70px',
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, var(--primary-green), #059669)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginRight: '1.5rem',
+                    color: 'white',
+                    boxShadow: '0 8px 20px rgba(34, 197, 94, 0.3)'
+                  }}>
+                    <Target size={32} />
+                  </div>
                   <div>
-                    <h3 style={{ marginBottom: '0.5rem' }}>{exam.title}</h3>
-                    <p style={{ color: 'var(--text-light)', margin: 0, fontSize: '0.9rem' }}>
-                      Duration: {exam.duration}
-                    </p>
+                    <h3 style={{ 
+                      marginBottom: '0.5rem',
+                      color: '#1e293b',
+                      fontSize: '1.4rem',
+                      fontWeight: '600'
+                    }}>
+                      {exam.title}
+                    </h3>
                   </div>
                 </div>
 
-                <p style={{ marginBottom: '1.5rem' }}>{exam.description}</p>
+                {/* Description */}
+                <p style={{ 
+                  marginBottom: '2rem', 
+                  color: '#64748b',
+                  lineHeight: '1.6',
+                  fontSize: '1rem'
+                }}>
+                  {exam.description}
+                </p>
 
+                {/* Features */}
                 <div>
-                  <h5 style={{ marginBottom: '1rem' }}>Program Highlights:</h5>
+                  <h5 style={{ 
+                    marginBottom: '1.2rem',
+                    color: '#1e293b',
+                    fontSize: '1.1rem',
+                    fontWeight: '600'
+                  }}>
+                    Program Highlights:
+                  </h5>
                   <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                     {exam.features.map((feature, idx) => (
                       <li key={idx} style={{ 
                         display: 'flex', 
                         alignItems: 'center', 
-                        marginBottom: '0.5rem'
+                        marginBottom: '0.8rem',
+                        fontSize: '0.95rem',
+                        color: '#475569'
                       }}>
-                        <Award size={16} style={{ color: 'var(--primary-green)', marginRight: '8px' }} />
+                        <Award size={18} style={{ 
+                          color: 'var(--primary-green)', 
+                          marginRight: '12px',
+                          flexShrink: 0
+                        }} />
                         {feature}
                       </li>
                     ))}
@@ -201,26 +359,68 @@ const Courses = () => {
       </section>
 
       {/* Boards & Schedule */}
-      <section className="section">
+      <section className="section" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
         <div className="container">
-          <div className="grid grid-2" style={{ gap: '3rem' }}>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', 
+            gap: '3rem',
+            alignItems: 'start'
+          }}>
             {/* Boards */}
             <div>
-              <h2 className="text-green">Boards We Cover</h2>
-              <p style={{ marginBottom: '2rem' }}>
+              <h2 style={{ 
+                color: '#1e293b',
+                fontSize: '2rem',
+                fontWeight: '700',
+                marginBottom: '1rem'
+              }}>
+                Boards We Cover
+              </h2>
+              <p style={{ 
+                marginBottom: '2rem',
+                color: '#64748b',
+                lineHeight: '1.6',
+                fontSize: '1.1rem'
+              }}>
                 We provide comprehensive preparation for all major educational boards to ensure students are well-prepared regardless of their board affiliation.
               </p>
               
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 {boards.map((board, index) => (
-                  <div key={index} className="card" style={{ 
+                  <div key={index} style={{ 
+                    background: 'white',
+                    borderRadius: '16px',
                     padding: '1.5rem',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '1rem'
+                    gap: '1.5rem',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
+                    border: '1px solid #e2e8f0',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.12)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.08)';
                   }}>
-                    <div style={{ fontSize: '2rem' }}>{board.icon}</div>
-                    <h4 style={{ margin: 0, color: 'var(--primary-green)' }}>{board.name}</h4>
+                    <div style={{ 
+                      fontSize: '2.5rem',
+                      filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+                    }}>
+                      {board.icon}
+                    </div>
+                    <h4 style={{ 
+                      margin: 0, 
+                      color: '#1e293b',
+                      fontSize: '1.2rem',
+                      fontWeight: '600'
+                    }}>
+                      {board.name}
+                    </h4>
                   </div>
                 ))}
               </div>
@@ -228,51 +428,147 @@ const Courses = () => {
 
             {/* Schedule & Info */}
             <div>
-              <div className="card" style={{ 
+              <div style={{ 
+                background: 'linear-gradient(135deg, var(--primary-green) 0%, #059669 100%)',
+                borderRadius: '24px',
                 padding: '2.5rem', 
-                backgroundColor: 'var(--primary-green)', 
-                color: 'white' 
+                color: 'white',
+                position: 'relative',
+                overflow: 'hidden',
+                boxShadow: '0 10px 30px rgba(34, 197, 94, 0.2)'
               }}>
-                <h3 style={{ color: 'white', marginBottom: '1.5rem' }}>Class Schedule & Information</h3>
+                <div style={{
+                  position: 'absolute',
+                  top: '-50px',
+                  right: '-50px',
+                  width: '150px',
+                  height: '150px',
+                  borderRadius: '50%',
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  zIndex: 1
+                }}></div>
+                <div style={{
+                  position: 'absolute',
+                  bottom: '-30px',
+                  left: '-30px',
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '50%',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  zIndex: 1
+                }}></div>
+
+                <div style={{ position: 'relative', zIndex: 2 }}>
+                  <h3 style={{ 
+                    color: 'white', 
+                    marginBottom: '2rem',
+                    fontSize: '1.8rem',
+                    fontWeight: '700'
+                  }}>
+                    Class Schedule & Information
+                  </h3>
                 
                 <div style={{ marginBottom: '2rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-                    <Clock size={24} style={{ marginRight: '12px' }} />
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      marginBottom: '1.5rem',
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      borderRadius: '12px',
+                      padding: '1rem',
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)'
+                    }}>
+                      <Clock size={28} style={{ marginRight: '1rem', color: '#fef3c7' }} />
                     <div>
-                      <h5 style={{ color: 'white', margin: 0 }}>Class Timing</h5>
-                      <p style={{ color: '#d1fae5', margin: 0 }}>04:00 PM to 07:00 PM</p>
+                        <h5 style={{ color: 'white', margin: 0, fontSize: '1.1rem', fontWeight: '600' }}>Class Timing</h5>
+                        <p style={{ color: '#d1fae5', margin: 0, fontSize: '1rem' }}>04:00 PM to 07:00 PM</p>
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-                    <Users size={24} style={{ marginRight: '12px' }} />
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      marginBottom: '1.5rem',
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      borderRadius: '12px',
+                      padding: '1rem',
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)'
+                    }}>
+                      <Users size={28} style={{ marginRight: '1rem', color: '#fef3c7' }} />
                     <div>
-                      <h5 style={{ color: 'white', margin: 0 }}>Batch Size</h5>
-                      <p style={{ color: '#d1fae5', margin: 0 }}>Small batches for personalized attention</p>
+                        <h5 style={{ color: 'white', margin: 0, fontSize: '1.1rem', fontWeight: '600' }}>Batch Size</h5>
+                        <p style={{ color: '#d1fae5', margin: 0, fontSize: '1rem' }}>Small batches for personalized attention</p>
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-                    <BookOpen size={24} style={{ marginRight: '12px' }} />
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      marginBottom: '2rem',
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      borderRadius: '12px',
+                      padding: '1rem',
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)'
+                    }}>
+                      <BookOpen size={28} style={{ marginRight: '1rem', color: '#fef3c7' }} />
                     <div>
-                      <h5 style={{ color: 'white', margin: 0 }}>Study Material</h5>
-                      <p style={{ color: '#d1fae5', margin: 0 }}>Comprehensive notes and practice materials</p>
+                        <h5 style={{ color: 'white', margin: 0, fontSize: '1.1rem', fontWeight: '600' }}>Study Material</h5>
+                        <p style={{ color: '#d1fae5', margin: 0, fontSize: '1rem' }}>Comprehensive notes and practice materials</p>
                     </div>
                   </div>
                 </div>
 
                 <div style={{ 
-                  backgroundColor: 'rgba(255,255,255,0.1)', 
+                    backgroundColor: 'rgba(255, 255, 255, 0.15)', 
                   padding: '1.5rem', 
-                  borderRadius: '12px' 
-                }}>
-                  <h5 style={{ color: 'white', marginBottom: '1rem' }}>Special Features</h5>
+                    borderRadius: '16px',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)'
+                  }}>
+                    <h5 style={{ 
+                      color: 'white', 
+                      marginBottom: '1rem',
+                      fontSize: '1.2rem',
+                      fontWeight: '600'
+                    }}>
+                      Special Features
+                    </h5>
                   <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                    <li style={{ marginBottom: '0.5rem', color: '#f0fdf4' }}>• Weekly and Monthly Tests</li>
-                    <li style={{ marginBottom: '0.5rem', color: '#f0fdf4' }}>• Separate Groups for Girls</li>
-                    <li style={{ marginBottom: '0.5rem', color: '#f0fdf4' }}>• Conceptual Clarity Focus</li>
-                    <li style={{ color: '#f0fdf4' }}>• Affordable Fee Structure</li>
+                      <li style={{ 
+                        marginBottom: '0.8rem', 
+                        color: '#f0fdf4',
+                        fontSize: '1rem',
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}>
+                        <CheckCircle size={18} style={{ marginRight: '10px', color: '#fef3c7' }} />
+                        Weekly and Monthly Tests
+                      </li>
+                      
+                      <li style={{ 
+                        marginBottom: '0.8rem', 
+                        color: '#f0fdf4',
+                        fontSize: '1rem',
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}>
+                        <CheckCircle size={18} style={{ marginRight: '10px', color: '#fef3c7' }} />
+                        Conceptual Clarity Focus
+                      </li>
+                      <li style={{ 
+                        color: '#f0fdf4',
+                        fontSize: '1rem',
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}>
+                        <CheckCircle size={18} style={{ marginRight: '10px', color: '#fef3c7' }} />
+                        Affordable Fee Structure
+                      </li>
                   </ul>
+                  </div>
                 </div>
               </div>
             </div>

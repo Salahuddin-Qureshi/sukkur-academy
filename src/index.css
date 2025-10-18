@@ -142,13 +142,13 @@ p {
   background: white;
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   transition: all 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  transform: none;
+  box-shadow: none;
 }
 
 /* Form styles */
@@ -235,4 +235,108 @@ p {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* 3-Column Grid for Registration Form */
+.grid-3-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+/* Responsive adjustments for 3-column grid */
+@media (max-width: 1024px) {
+  .grid-3-columns {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-3-columns {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Registration form container - wider layout */
+.registration-container {
+  padding: 0 !important;
+}
+
+/* Hero Title Responsive */
+@media (max-width: 768px) {
+  .hero h1 {
+    white-space: normal !important;
+    font-size: 2.5rem !important;
+    line-height: 1.1 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 2rem !important;
+  }
+}
+
+/* Footer Responsive */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+/* Large Tablet: 2 columns */
+@media (max-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 2rem !important;
+  }
+}
+
+/* Mobile: 1 column */
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  
+  footer .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .footer-grid {
+    gap: 1.5rem !important;
+  }
+  
+  footer h4 {
+    font-size: 1.1rem !important;
+  }
+}
+
+/* Footer Bottom Responsive */
+@media (max-width: 768px) {
+  .footer-bottom {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 1.5rem !important;
+  }
+  
+  .footer-bottom p {
+    order: 2;
+  }
+}
+
+/* Improve text wrapping on mobile */
+@media (max-width: 480px) {
+  footer p, footer li {
+    font-size: 13px !important;
+  }
+  
+  footer h4 {
+    font-size: 1rem !important;
+    margin-bottom: 0.75rem !important;
+  }
 }

@@ -10,7 +10,7 @@ const Header = () => {
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Courses', href: '/courses' },
-    { name: 'Faculty', href: '/faculty' },
+    // { name: 'Faculty', href: '/faculty' },
     { name: 'Contact', href: '/contact' },
   ];
 
@@ -25,16 +25,16 @@ const Header = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                 <Phone size={14} />
-                <span>07156354497 / 03000555547</span>
+                <span>+92 3152550599</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                 <Mail size={14} />
-                <span>info@sukkuracademy.com</span>
+                <span>thesukkuracademy@gmail.com</span>
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <MapPin size={14} />
-              <span>Hira School, Sukkur</span>
+              <span>Hira School, Sukkur Township</span>
             </div>
           </div>
         </div>
@@ -65,7 +65,7 @@ const Header = () => {
                   THE SUKKUR ACADEMY
                 </h1>
                 <p style={{ fontSize: '0.9rem', color: 'var(--text-light)', margin: 0 }}>
-                  Where Experience Meets Excellence
+                  Your Path to Academic Excellence
                 </p>
               </div>
             </Link>
@@ -106,7 +106,13 @@ const Header = () => {
 
             {/* CTA Button */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <Link to="/registration" className="btn btn-primary">
+              <Link 
+                to="/registration" 
+                className="btn btn-primary"
+                style={{
+                  display: window.innerWidth <= 768 ? 'none' : 'inline-block'
+                }}
+              >
                 Register Now
               </Link>
               
@@ -155,6 +161,25 @@ const Header = () => {
                     </Link>
                   </li>
                 ))}
+                <li style={{ marginTop: '1rem' }}>
+                  <Link
+                    to="/registration"
+                    onClick={() => setIsMenuOpen(false)}
+                    style={{
+                      display: 'block',
+                      textDecoration: 'none',
+                      backgroundColor: 'var(--primary-green)',
+                      color: 'white',
+                      fontWeight: '600',
+                      fontSize: '16px',
+                      padding: '0.75rem 1rem',
+                      borderRadius: '8px',
+                      textAlign: 'center'
+                    }}
+                  >
+                    Register Now
+                  </Link>
+                </li>
               </ul>
             </nav>
           )}

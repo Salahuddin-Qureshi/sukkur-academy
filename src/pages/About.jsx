@@ -4,30 +4,30 @@ const About = () => {
   const stats = [
     { number: "500+", label: "Students Enrolled", icon: <Users size={30} /> },
     { number: "15+", label: "Years Experience", icon: <Award size={30} /> },
-    { number: "5", label: "Expert Subjects", icon: <BookOpen size={30} /> },
+    { number: "6+", label: "Expert Subjects", icon: <BookOpen size={30} /> },
     { number: "95%", label: "Success Rate", icon: <Target size={30} /> }
   ];
 
   const values = [
     {
       icon: <Target size={40} />,
-      title: "Excellence",
-      description: "We strive for excellence in everything we do, from teaching methods to student support."
+      title: "Accessibility",
+      description: "Making quality education accessible to underprivileged students through affordable fees and comprehensive support."
     },
     {
       icon: <Heart size={40} />,
-      title: "Dedication",
-      description: "Our faculty is dedicated to each student's success and personal growth."
+      title: "Empowerment",
+      description: "Empowering students with scientific knowledge and technological skills to transform their future prospects."
     },
     {
       icon: <BookOpen size={40} />,
       title: "Innovation",
-      description: "We use modern teaching techniques and technology to enhance learning."
+      description: "Integrating modern IT education alongside traditional subjects to prepare students for the digital age."
     },
     {
       icon: <Users size={40} />,
-      title: "Community",
-      description: "We foster a supportive learning community where students thrive together."
+      title: "Inclusivity",
+      description: "Creating an inclusive learning environment where every student has the opportunity to excel regardless of their background."
     }
   ];
 
@@ -43,7 +43,7 @@ const About = () => {
         <div className="container">
           <h1 style={{ fontSize: '3rem', marginBottom: '1rem', color: 'white' }}>About The Sukkur Academy</h1>
           <p style={{ fontSize: '1.2rem', maxWidth: '800px', margin: '0 auto', color: '#d1fae5' }}>
-            Where Experience Meets Excellence - Dedicated to providing quality education and shaping the future of our students through expert guidance and proven teaching methods.
+            Your Path to Academic Excellence - Dedicated to bridging the educational gap for underprivileged students through quality education in science, mathematics, and computing technology.
           </p>
         </div>
       </section>
@@ -55,13 +55,16 @@ const About = () => {
             <div>
               <h2 className="text-green">Our Story</h2>
               <p style={{ fontSize: '1.1rem', marginBottom: '1.5rem' }}>
-                The Sukkur Academy was founded with a vision to provide high-quality education to students in Sukkur and surrounding areas. Our academy specializes in preparing students for MDCAT and ECAT examinations, ensuring they have the best possible foundation for their future careers in medicine and engineering.
+                The Sukkur Academy was founded with a vision to bridge the educational gap for underprivileged students in Sukkur and surrounding areas. We believe that quality education in science, mathematics, and computing technology should be accessible to all students, regardless of their economic background.
               </p>
               <p style={{ fontSize: '1.1rem', marginBottom: '1.5rem' }}>
-                Located at Hira School in the heart of Sukkur, we have been serving the educational needs of students from classes 9th to 12th. Our experienced faculty members are subject experts who bring years of teaching experience and a deep understanding of competitive exam patterns.
+                Located at Hira School in Sukkur Township, we serve students from Classes 9th to 12th, offering comprehensive education in core subjects including Mathematics, Physics, Chemistry, Biology, and English. We also specialize in MDCAT & ECAT preparation for aspiring medical and engineering students.
+              </p>
+              <p style={{ fontSize: '1.1rem', marginBottom: '1.5rem' }}>
+                Beyond traditional subjects, we've expanded our curriculum to include Information Technology courses covering Computer Knowledge, Web Development, and AI Basics, preparing students for the digital age and opening doors to modern career opportunities.
               </p>
               <p style={{ fontSize: '1.1rem' }}>
-                We believe that every student has the potential to excel, and our mission is to unlock that potential through personalized attention, comprehensive curriculum, and a supportive learning environment.
+                Our mission is to empower students with scientific knowledge and technological skills, enabling them to see the world through the lens of science, mathematics, and computing, ultimately transforming their future prospects.
               </p>
             </div>
             
@@ -73,7 +76,7 @@ const About = () => {
                   <span style={{ fontWeight: '600' }}>Vision</span>
                 </div>
                 <p style={{ marginBottom: '1.5rem', paddingLeft: '36px' }}>
-                  To be the leading educational institution in Sukkur, recognized for excellence in MDCAT and ECAT preparation and student success.
+                  To bridge the educational gap for underprivileged students by providing accessible, quality education in science, mathematics, and computing technology, empowering them to see and work with the world through scientific knowledge and technological innovation.
                 </p>
                 
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
@@ -81,7 +84,7 @@ const About = () => {
                   <span style={{ fontWeight: '600' }}>Mission</span>
                 </div>
                 <p style={{ paddingLeft: '36px' }}>
-                  To provide quality education through highly qualified faculty, innovative teaching methods, and comprehensive support to help students achieve their academic and career goals.
+                  To provide comprehensive education from Classes 9th to 12th, including MDCAT & ECAT preparation and modern IT courses (Computer Knowledge, Web Development, AI Basics), through qualified faculty and affordable fees, ensuring every student has the opportunity to excel.
                 </p>
               </div>
             </div>
@@ -167,7 +170,7 @@ const About = () => {
                   <strong>Area:</strong> Sector 3, opposite Imam bargha ladies' gate
                 </p>
                 <p style={{ marginBottom: '0.5rem' }}>
-                  <strong>City:</strong> Sukkur Township
+                  <strong>City:</strong> Sukkur
                 </p>
                 <p>
                   <strong>Timing:</strong> 04:00 PM to 07:00 PM
@@ -193,9 +196,8 @@ const About = () => {
                   marginBottom: '1.5rem'
                 }}>
                   <h4 style={{ color: 'white', marginBottom: '1rem' }}>Contact Information</h4>
-                  <p style={{ margin: '0.5rem 0', color: '#f0fdf4' }}>📞 07156354497</p>
-                  <p style={{ margin: '0.5rem 0', color: '#f0fdf4' }}>📞 03000555547</p>
-                  <p style={{ margin: '0.5rem 0', color: '#f0fdf4' }}>✉️ info@sukkuracademy.com</p>
+                  <p style={{ margin: '0.5rem 0', color: '#f0fdf4' }}>📞 +92 3152550599</p>
+                  <p style={{ margin: '0.5rem 0', color: '#f0fdf4' }}>✉️ thesukkuracademy@gmail.com</p>
                 </div>
               </div>
             </div>

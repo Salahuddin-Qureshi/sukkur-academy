@@ -302,10 +302,10 @@ const Faculty = () => {
               Schedule a visit to meet our professors, discuss your academic goals, and see how we can help you succeed.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a href="tel:07156354497" className="btn btn-primary" style={{ fontSize: '1.1rem', padding: '15px 30px' }}>
-                Call Us: 07156354497
+              <a href="tel:+923152550599" className="btn btn-primary" style={{ fontSize: '1.1rem', padding: '15px 30px' }}>
+                Call Us: +92 3152550599
               </a>
-              <a href="mailto:info@sukkuracademy.com" className="btn btn-secondary" style={{ fontSize: '1.1rem', padding: '15px 30px' }}>
+              <a href="mailto:thesukkuracademy@gmail.com" className="btn btn-secondary" style={{ fontSize: '1.1rem', padding: '15px 30px' }}>
                 Email Us
               </a>
             </div>
