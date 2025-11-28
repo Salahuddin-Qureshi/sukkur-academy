@@ -34,7 +34,7 @@ const Header = () => {
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <MapPin size={14} />
-              <span>Hira School, Sukkur Township</span>
+              <span>The Smart School, Sukkur Township</span>
             </div>
           </div>
         </div>

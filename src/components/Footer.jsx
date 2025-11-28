@@ -85,7 +85,7 @@ const Footer = () => {
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                 <MapPin size={16} style={{ color: 'var(--primary-green)', marginTop: '2px' }} />
                 <div>
-                  <p style={{ color: '#9ca3af', margin: 0, fontSize: '14px' }}>Hira School Bunglow no.29</p>
+                  <p style={{ color: '#9ca3af', margin: 0, fontSize: '14px' }}>The Smart School Bunglow no.29</p>
                   <p style={{ color: '#9ca3af', margin: 0, fontSize: '14px' }}>Sector 3, Sukkur Township</p>
                 </div>
               </div>

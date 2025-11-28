@@ -58,7 +58,7 @@ const About = () => {
                 The Sukkur Academy was founded with a vision to bridge the educational gap for underprivileged students in Sukkur and surrounding areas. We believe that quality education in science, mathematics, and computing technology should be accessible to all students, regardless of their economic background.
               </p>
               <p style={{ fontSize: '1.1rem', marginBottom: '1.5rem' }}>
-                Located at Hira School in Sukkur Township, we serve students from Classes 9th to 12th, offering comprehensive education in core subjects including Mathematics, Physics, Chemistry, Biology, and English. We also specialize in MDCAT & ECAT preparation for aspiring medical and engineering students.
+                Located at The Smart School in Sukkur Township, we serve students from Classes 9th to 12th, offering comprehensive education in core subjects including Mathematics, Physics, Chemistry, Biology, and English. We also specialize in MDCAT & ECAT preparation for aspiring medical and engineering students.
               </p>
               <p style={{ fontSize: '1.1rem', marginBottom: '1.5rem' }}>
                 Beyond traditional subjects, we've expanded our curriculum to include Information Technology courses covering Computer Knowledge, Web Development, and AI Basics, preparing students for the digital age and opening doors to modern career opportunities.
@@ -164,7 +164,7 @@ const About = () => {
               <div className="card" style={{ padding: '1.5rem' }}>
                 <h4 style={{ marginBottom: '1rem' }}>Address Details</h4>
                 <p style={{ marginBottom: '0.5rem' }}>
-                  <strong>Location:</strong> Hira School Bunglow no.29
+                  <strong>Location:</strong> The Smart School Bunglow no.29
                 </p>
                 <p style={{ marginBottom: '0.5rem' }}>
                   <strong>Area:</strong> Sector 3, opposite Imam bargha ladies' gate

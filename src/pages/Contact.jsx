@@ -109,7 +109,7 @@ const Contact = () => {
     {
       icon: <MapPin size={24} />,
       title: "Location",
-      details: ["Hira School Bunglow no.29", "Sector 3, opposite Imam bargha", "ladies' gate sukkur Township"],
+      details: ["The Smart School Bunglow no.29", "Sector 3, opposite Imam bargha", "ladies' gate sukkur Township"],
       action: "#"
     },
     {
@@ -414,7 +414,7 @@ const Contact = () => {
                   <strong>Address:</strong>
                 </div>
                 <p style={{ marginLeft: '28px', marginBottom: '1rem' }}>
-                  Hira School Bunglow no.29<br />
+                  The Smart School Bunglow no.29<br />
                   Sector 3, opposite Imam bargha ladies' gate<br />
                   Sukkur Township, Sukkur
                 </p>
